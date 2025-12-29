@@ -7,7 +7,7 @@ import {
   FaTwitter,
   FaInstagram,
   FaEnvelope,
-} from "react-icons/fa"; // ✅ NEW
+} from "react-icons/fa";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,9 +18,8 @@ export default function Contact() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,13 +27,21 @@ export default function Contact() {
     setStatus("");
 
     try {
-      await axios.post("http://localhost:5000/api/contact", formData);
+      await axios.post(
+        "https://mamesportfolio.onrender.com/api/contact",
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       setStatus("Message sent successfully! I’ll get back to you soon.");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
+      console.error("Contact API Error:", error);
       setStatus("Oops! Something went wrong. Please try again.");
     }
+
     setLoading(false);
   };
 
@@ -56,7 +63,6 @@ export default function Contact() {
             out!
           </p>
 
-          {/* ================= CONTACT FORM ================= */}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label className="block text-gray-700 font-medium mb-2">
@@ -69,7 +75,7 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 className="w-full px-6 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300"
-                placeholder="Mohammed Shifa"
+                placeholder="Your Name"
               />
             </div>
 
@@ -124,21 +130,16 @@ export default function Contact() {
             )}
           </form>
 
-          {/* ================= SOCIAL MEDIA LINKS ================= */}
           <div className="mt-14 text-center">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">
               Connect With Me
             </h3>
-
             <div className="flex justify-center gap-6">
               {[
-                {
-                  icon: <FaGithub />,
-                  link: "https://github.com/mamex7sl862",
-                },
+                { icon: <FaGithub />, link: "https://github.com/mamex7sl862" },
                 {
                   icon: <FaLinkedin />,
-                  link: "https://www.linkedin.com/in/mohammed-shifa-3019ba357?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                  link: "https://www.linkedin.com/in/mohammed-shifa-3019ba357",
                 },
                 {
                   icon: <FaTwitter />,
