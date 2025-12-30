@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
+import emailjs from "@emailjs/browser"; // ← New import
 import {
   FaGithub,
   FaLinkedin,
@@ -21,28 +21,42 @@ export default function Contact() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setStatus("");
 
-    try {
-      await axios.post(
-        "https://mamesportfolio.onrender.com/api/contact",
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
+    // ⚠️ REPLACE THESE WITH YOUR ACTUAL EMAILJS IDs ⚠️
+    const serviceID = "service_nk35chh"; // e.g., service_abc123def
+    const templateID = "template_uligxf7"; // ← You already have this!
+    const userID = "BZnkIkuBHLGXLc7o9"; // e.g., user_xxxxxxxxxxxxxxx
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    };
+
+    emailjs
+      .send(serviceID, templateID, templateParams, userID)
+      .then(
+        (response) => {
+          console.log(
+            "Email sent successfully!",
+            response.status,
+            response.text
+          );
+          setStatus("Message sent successfully! I’ll get back to you soon.");
+          setFormData({ name: "", email: "", message: "" });
+        },
+        (error) => {
+          console.error("EmailJS Error:", error);
+          setStatus("Oops! Something went wrong. Please try again.");
         }
-      );
-
-      setStatus("Message sent successfully! I’ll get back to you soon.");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error("Contact API Error:", error);
-      setStatus("Oops! Something went wrong. Please try again.");
-    }
-
-    setLoading(false);
+      )
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
