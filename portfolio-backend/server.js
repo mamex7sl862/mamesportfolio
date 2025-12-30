@@ -23,9 +23,6 @@ app.use(
   })
 );
 
-// Explicitly handle preflight OPTIONS requests for all routes (extra safety)
-app.options("*", cors());
-
 // Simple root route to confirm server is running and to help keep Render awake
 app.get("/", (req, res) => {
   res.json({ message: "Portfolio backend is running! 🚀" });
