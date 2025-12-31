@@ -15,6 +15,8 @@ export default function Projects() {
         "Full-stack MERN job portal inspired by Indeed — job search, posting, applications, filters, AI recommendations, and admin dashboard.",
       tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind"],
       live: "https://etdelala.vercel.app",
+      etdelala.vercel.app
+
       github: "https://github.com/mamex7sl862/ET-DELALA",
       image: etdelalaImg,
       featured: true,
