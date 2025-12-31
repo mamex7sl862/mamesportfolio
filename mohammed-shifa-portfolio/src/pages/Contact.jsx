@@ -29,7 +29,7 @@ export default function Contact() {
 
     // Replace these if you ever create new ones in EmailJS dashboard
     const serviceID = "service_nk35chh";
-    const templateID = "template_uligxf7";
+    const templateID = "template_ulgjxf7";
     const userID = "BZnkIkuBHLGXLc7o9"; // This is your Public Key
 
     const templateParams = {
